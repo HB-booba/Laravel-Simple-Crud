@@ -1,78 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+@section('titlePage')
+    Module 1 simple CRUD
+@endsection
 
-    <title>Module 1 simple CRUD</title>
-
-    <style>
-          /* Custom styles */
-  .custom-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .custom-flex-item {
-    flex: 1 0 300px; /* Flex shorthand: flex-grow, flex-shrink, flex-basis */
-    margin: 10px;    /* Add some margin for spacing */
-    min-width: 300px; /* Minimum width for the items */
-  }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand h1" href={{ route('posts.index') }}>Module 1 simple CRUD</a>
-            <div class="justify-end ">
-                <div class="col ">
-                    <a class="btn btn-sm btn-success" href={{ route('posts.create') }}>Add Post</a>
-                </div>
-            </div>
-    </nav>
-    <div class="container mt-5">
-    
+@section('content')
     @if(Session::has('success'))
-        <div class="alert alert-primary" role="alert">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-primary" role="alert">
+        {{ session('success') }}
+    </div>
     @endif
-    
-        <div class="row custom-flex-container">
-            @foreach ($posts as $post)
-                <div class="col custom-flex-item">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ $post->body }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-sm">
-                                    <a href="{{ route('posts.edit', $post->id) }}"
-                                        class="btn btn-primary btn-sm">Edit</a>
-                                </div>
-                                <div class="col-sm">
-                                    <form action="{{ route('posts.destroy', $post->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                </div>
+
+    <div class="row custom-flex-container">
+        @foreach ($posts as $post)
+            <div class="col custom-flex-item">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <a class="h5" href={{ route('posts.show', ['post' => $post->id]) }} >{{ $post->title }}</a>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ $post->body }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm">
+                                <a href="{{ route('posts.edit', $post->id) }}"
+                                    class="btn btn-primary btn-sm">Edit</a>
+                            </div>
+                            <div class="col-sm">
+                                <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
-</body>
-
-</html>
+@endsection

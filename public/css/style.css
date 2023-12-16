@@ -1,0 +1,17 @@
+a,*{
+  text-decoration: none;
+}
+
+.custom-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .custom-flex-item {
+    flex: 1 0 300px; /* Flex shorthand: flex-grow, flex-shrink, flex-basis */
+    margin: 10px;    /* Add some margin for spacing */
+    min-width: 300px; /* Minimum width for the items */
+  }
+  .action-show{
+    gap: 30px;
+}
